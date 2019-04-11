@@ -1,10 +1,22 @@
-<app-header> </app-header>
+<app-header
+  (recipesVisibilityFired)="onRecipesVisibilityFired($event)"
+  (ShoppingListVisibilityFired)="onShoppingListVisibilityFired($event)"
+>
+</app-header>
 
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes></app-recipes>
-      <app-shopping-list></app-shopping-list>
+      <app-recipes
+        [ngStyle]="{ visibility: recipesVisibility ? 'visible' : 'hidden' }"
+      ></app-recipes>
+      <app-shopping-list
+        [ngStyle]="{
+          visibility: shoppingListVisibility ? 'visible' : 'hidden'
+        }"
+      ></app-shopping-list>
     </div>
   </div>
 </div>
+<!-- style="visibility: hidden" -->
+<!-- [ngStyle]="{ visibility: visibility ? 'visible' : 'hidden' }" -->
