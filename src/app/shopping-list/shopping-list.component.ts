@@ -1,17 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { Ingredient } from "../shared/ingredient.model";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Ingredient } from '../shared/ingredient.model';
 
 @Component({
-  selector: "app-shopping-list",
-  templateUrl: "./shopping-list.component.html",
-  styleUrls: ["./shopping-list.component.css"]
+  selector: 'app-shopping-list',
+  templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.css']
 })
-export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
-    new Ingredient("Grapes", 50),
-    new Ingredient("Sulphites", 5)
-  ];
-  constructor() {}
+export class ShoppingListComponent {
+  // @Output() ingredientWasAdded: Ingredient = new EventEmitter<Ingredient>()
 
-  ngOnInit() {}
+  ingredients: Ingredient[] = [
+    new Ingredient('Grapes', 50),
+    new Ingredient('Sulphites', 5)
+  ];
+
+  onIngredientAdded(ingredient: { name: string; amount: number }) {
+    this.ingredients.push(new Ingredient(ingredient.name, ingredient.amount));
+  }
 }
