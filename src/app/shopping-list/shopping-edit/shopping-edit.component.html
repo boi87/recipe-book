@@ -16,12 +16,7 @@
           <button
             class="btn btn-success"
             type="submit"
-            (click)="
-              ingredientAdded.emit({
-                name: nameInput.value,
-                amount: amountInput.value
-              })
-            "
+            (click)="onAddIngredient(nameInput, amountInput)"
           >
             Add
           </button>
