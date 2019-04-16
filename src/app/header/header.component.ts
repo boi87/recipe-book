@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
     this.shoppingListVisible = false;
     this.ShoppingListVisibilityFired.emit(this.shoppingListVisible);
     this.recipesVisibilityFired.emit(this.recipesVisible);
-    console.log(this.recipesVisible);
   }
 
   toggleShoppingListVisibility() {
@@ -28,6 +27,5 @@ export class HeaderComponent implements OnInit {
     this.recipesVisible = false;
     this.recipesVisibilityFired.emit(this.recipesVisible);
     this.ShoppingListVisibilityFired.emit(this.shoppingListVisible);
-    console.log(this.shoppingListVisible);
   }
 }
