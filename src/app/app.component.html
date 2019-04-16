@@ -8,11 +8,11 @@
   <div class="row">
     <div class="col-md-12">
       <app-recipes
-        [ngStyle]="{ visibility: recipesVisibility ? 'visible' : 'hidden' }"
+        [ngStyle]="{ display: recipesVisibility ? 'block' : 'none' }"
       ></app-recipes>
       <app-shopping-list
         [ngStyle]="{
-          visibility: shoppingListVisibility ? 'visible' : 'hidden'
+          display: shoppingListVisibility ? 'block' : 'none'
         }"
       ></app-shopping-list>
     </div>
