@@ -16,6 +16,5 @@ export class ShoppingListService {
   onIngredientAdded(ingredientAdded: Ingredient) {
     this.ingredients.push(ingredientAdded);
     this.ingredientsChanged.emit(this.ingredients.slice());
-    // console.log('smthnsdiu');
   }
 }
