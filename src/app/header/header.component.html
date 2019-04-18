@@ -1,46 +1,44 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recipe Book</a>
+      <a [routerLink]="['']" class="navbar-brand">Recipe Book</a>
     </div>
 
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li>
           <a
-            href="#"
+            [ngStyle]="{display: recipesVisibility ? 'block' : 'none'}"
+            routerLinkActive="active"
+            [routerLink]="['/recipes']"
             (click)="toggleRecipesVisibility()"
-            [ngStyle]="{
-              fontWeight: recipesVisible ? 'bold' : 'normal',
-              color: recipesVisible ? 'green' : default
-            }"
-            >Recipes</a
-          >
+          >Recipes
+          </a>
         </li>
         <li>
           <a
-            href="#"
-            (click)="toggleShoppingListVisibility()"
             [ngStyle]="{
-              fontWeight: shoppingListVisible ? 'bold' : 'normal',
-              color: shoppingListVisible ? 'green' : default
+              display: shoppingListVisibility ? 'block' : 'none'
             }"
-            >Shopping List
+            routerLinkActive="active"
+            [routerLink]="['/shopping-list']"
+            (click)="toggleShoppingListVisibility()"
+          >Shopping List
           </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
-          <a href="#" class="dropdown toggle" role="button"
-            >Manage
+          <a style="cursor: pointer" class="dropdown toggle" role="button"
+          >Manage
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#">Save Data</a>
+              <a style="cursor: pointer">Save Data</a>
             </li>
             <li>
-              <a href="#">Fetch Data</a>
+              <a style="cursor: pointer">Fetch Data</a>
             </li>
           </ul>
         </li>

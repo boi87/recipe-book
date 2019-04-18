@@ -27,5 +27,12 @@ export class RecipeDetailComponent implements OnInit {
 
     // alert('Ingredients were added to shopping list');
     console.log(ingredients);
+    console.log(this.ingredients);
   }
 }
+
+// <app-recipe-detail
+// *ngIf="selectedRecipe; else infoText"
+//   [recipe]="selectedRecipe"
+//   ></app-recipe-detail>
+//   <!--    <ng-template #infoText><p>Please select a recipe!</p></ng-template>-->
