@@ -1,6 +1,8 @@
 <a
   style="cursor: pointer"
-  class="list-group-item clearfix" (click)="onSelected()">
+  [routerLink]="[index]"
+  class="list-group-item clearfix"
+>
   <div class="pull-left">
     <h4 class="list-group-item-heading">
       {{ recipe.name }}
@@ -18,5 +20,5 @@
     />
   </span>
 </a>
-<!-- 
+<!--
 <p>{{ recipe | json }}</p> -->
