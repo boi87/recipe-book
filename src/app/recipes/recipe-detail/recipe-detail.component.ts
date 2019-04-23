@@ -36,10 +36,6 @@ export class RecipeDetailComponent implements OnInit {
     ingredients.map(ingredientItem =>
       this.shoppingListService.onIngredientAdded(ingredientItem)
     );
-    this.ingredients.push(...ingredients);
-    this.shoppingListService.ingredientsChanged.emit(this.ingredients.slice());
-
-
   }
 }
 
