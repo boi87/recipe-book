@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../recipes.model';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 import {RecipeService} from '../recipe.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ShoppingListService} from '../../shopping-list/shopping-list.service';
 
 @Component({
@@ -11,15 +11,16 @@ import {ShoppingListService} from '../../shopping-list/shopping-list.service';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Recipe;
-  id: number;
-  ingredients: Ingredient[];
+  recipe : Recipe;
+  id : number;
+  ingredients : Ingredient[];
 
 
   constructor(
-    private recipeService: RecipeService,
+    private recipeService : RecipeService,
     private route: ActivatedRoute,
-    private shoppingListService: ShoppingListService
+    private shoppingListService: ShoppingListService,
+    private router: Router
   ) {
   }
 
@@ -32,10 +33,14 @@ export class RecipeDetailComponent implements OnInit {
     console.log(this.id);
   }
 
-  onAddToShoppingList(ingredients: Ingredient[]) {
+  onAddToShoppingList(ingredients : Ingredient[]) {
     ingredients.map(ingredientItem =>
       this.shoppingListService.onIngredientAdded(ingredientItem)
     );
+  }
+
+  onEditRecipe() {
+    this.router.navigate(['edit'], {relativeTo: this.route});
   }
 }
 
