@@ -1,6 +1,7 @@
 import { Ingredient } from '../shared/ingredient.model';
 
 import { Subject } from 'rxjs';
+import index from '@angular/cli/lib/cli';
 
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
@@ -20,13 +21,32 @@ export class ShoppingListService {
   }
 
   onIngredientAdded(ingredientAdded: Ingredient) {
-    this.ingredients.push(ingredientAdded);
-    this.ingredientsChanged.next(this.ingredients.slice());
+    const check = this.ingredients.map(
+      e => e.name.toLowerCase() === ingredientAdded.name.toLowerCase()
+    );
+    const dupe = check.indexOf(true) !== -1;
+    console.log(check);
+    console.log(check.indexOf(true) !== -1);
+
+    if (dupe) {
+      console.log('its a dupe');
+      this.ingredients.map(e => {
+        if (e.name.toLowerCase() === ingredientAdded.name.toLowerCase()) {
+          // e.amount = ingredientAdded.amount + e.amount;
+          e.amount += ingredientAdded.amount;
+        }
+      });
+
+      // this.ingredients['ingredientAdded.amount'] += ingredientAdded.amount;
+    } else {
+      this.ingredients.push(ingredientAdded);
+      this.ingredientsChanged.next(this.ingredients.slice());
+    }
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
     this.ingredients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients);
   }
 
   deleteIngredient(index: number) {
