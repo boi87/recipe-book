@@ -2,6 +2,7 @@ import { Ingredient } from '../shared/ingredient.model';
 
 import { Subject } from 'rxjs';
 import index from '@angular/cli/lib/cli';
+import { Input } from '@angular/core';
 
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
