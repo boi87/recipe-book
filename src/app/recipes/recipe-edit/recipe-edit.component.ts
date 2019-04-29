@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RecipesComponent } from '../recipes.component';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipes.model';
 
@@ -17,7 +16,8 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -40,10 +40,21 @@ export class RecipeEditComponent implements OnInit {
 
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id, newRecipe);
+      this.onCancel();
     } else {
       this.recipeService.addRecipe(newRecipe);
+      this.onCancel();
     }
   }
+
+  // onSubmit() {
+  //   console.log(this.recipeForm);
+  //   if (this.editMode) {
+  //     this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+  //   } else {
+  //     this.recipeService.addRecipe(this.recipeForm.value);
+  //   }
+  // }
 
   onAddIngredient() {
     (this.recipeForm.get('ingredients') as FormArray).push(
@@ -55,6 +66,12 @@ export class RecipeEditComponent implements OnInit {
         ])
       })
     );
+  }
+
+  onCancel() {
+    this.editMode = false;
+    this.recipeForm.reset();
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   private initForm() {
@@ -85,10 +102,7 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = new FormGroup({
       name: new FormControl(recipeName, Validators.required),
       imagepath: new FormControl(recipeImagePath, Validators.required),
-      description: new FormControl(
-        recipeDescription,
-        Validators.required
-      ),
+      description: new FormControl(recipeDescription, Validators.required),
       ingredients: recipeIngredients
     });
   }
