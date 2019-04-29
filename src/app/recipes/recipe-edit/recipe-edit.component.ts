@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipesComponent } from '../recipes.component';
 import { RecipeService } from '../recipe.service';
+import { Recipe } from '../recipes.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -29,26 +30,53 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    const newRecipe = new Recipe(
+      this.id,
+      this.recipeForm.value.name,
+      this.recipeForm.value.description,
+      this.recipeForm.value.imagepath,
+      this.recipeForm.value.ingredients
+    );
+
+    if (this.editMode) {
+      this.recipeService.updateRecipe(this.id, newRecipe);
+    } else {
+      this.recipeService.addRecipe(newRecipe);
+    }
+  }
+
+  onAddIngredient() {
+    (this.recipeForm.get('ingredients') as FormArray).push(
+      new FormGroup({
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/)
+        ])
+      })
+    );
   }
 
   private initForm() {
     let recipeName = '';
-    let recipeImagePath = '';
     let recipeDescription = '';
+    let recipeImagePath = '';
     const recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
+      recipeImagePath = recipe.imagePath;
       if (recipe.ingredients) {
         recipe.ingredients.map(ingr =>
           recipeIngredients.push(
             new FormGroup({
-              name: new FormControl(ingr.name),
-              amount: new FormControl(ingr.amount)
+              name: new FormControl(ingr.name, Validators.required),
+              amount: new FormControl(
+                ingr.amount,
+                Validators.pattern(/^[1-9]+[0-9]*$/)
+              )
             })
           )
         );
@@ -57,7 +85,7 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = new FormGroup({
       name: new FormControl(recipeName, Validators.required),
       imagepath: new FormControl(recipeImagePath, Validators.required),
-      recipeDescription: new FormControl(
+      description: new FormControl(
         recipeDescription,
         Validators.required
       ),

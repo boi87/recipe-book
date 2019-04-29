@@ -3,7 +3,14 @@
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-xs-12">
-          <button type=" submit" class="btn btn-success">Save</button>
+          <button
+            type=" submit"
+            class="btn btn-success"
+            style="margin-right: 10px"
+            [disabled]="!recipeForm.valid"
+          >
+            Save
+          </button>
           <button type="button" class="btn btn-danger">Cancel</button>
         </div>
       </div>
@@ -51,7 +58,7 @@
               id="description"
               class="form-control"
               rows="6"
-              formControlName="recipeDescription"
+              formControlName="description"
             >
             </textarea>
           </div>
@@ -67,6 +74,7 @@
               let i = index
             "
             [formGroupName]="i"
+            style="margin-top: 10px"
           >
             <div class="col-xs-8">
               <input type="text" class="form-control" formControlName="name" />
@@ -80,6 +88,18 @@
             </div>
             <div class="col-xs-2">
               <button class="btn btn-danger">X</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="btn btn-success"
+                style="margin-top: 10px"
+                (click)="onAddIngredient()"
+              >
+                Add Ingredient
+              </button>
             </div>
           </div>
         </div>
