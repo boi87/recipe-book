@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe.service';
 import { Recipe } from '../recipes.model';
+import { Ingredient } from '../../shared/ingredient.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -72,6 +73,10 @@ export class RecipeEditComponent implements OnInit {
     this.editMode = false;
     this.recipeForm.reset();
     this.router.navigate(['..'], { relativeTo: this.route });
+  }
+
+  onDeleteIngredient(index: number) {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   private initForm() {
