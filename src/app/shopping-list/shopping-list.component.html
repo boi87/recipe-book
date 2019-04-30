@@ -7,7 +7,10 @@
       <a
         class="list-group-item"
         style="cursor: pointer"
-        *ngFor="let ingr of ingredients; let i = index"
+        *ngFor="
+          let ingr of (shoppingListState | async).ingredients;
+          let i = index
+        "
         (click)="onEditItem(i)"
         >{{ ingr.name }} ({{ ingr.amount }})</a
       >

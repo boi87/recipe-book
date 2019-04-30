@@ -36,7 +36,7 @@ export class RecipeEditComponent implements OnInit {
       this.recipeForm.value.name,
       this.recipeForm.value.description,
       this.recipeForm.value.imagepath,
-      this.recipeForm.value.ingredients
+      this.recipeForm.value.shoppingListState
     );
 
     if (this.editMode) {
@@ -58,7 +58,7 @@ export class RecipeEditComponent implements OnInit {
   // }
 
   onAddIngredient() {
-    (this.recipeForm.get('ingredients') as FormArray).push(
+    (this.recipeForm.get('shoppingListState') as FormArray).push(
       new FormGroup({
         name: new FormControl(null, Validators.required),
         amount: new FormControl(null, [
@@ -76,7 +76,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onDeleteIngredient(index: number) {
-    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
+    (this.recipeForm.get('shoppingListState') as FormArray).removeAt(index);
   }
 
   private initForm() {

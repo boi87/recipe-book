@@ -38,7 +38,7 @@ export class ShoppingListService {
         }
       });
 
-      // this.ingredients['ingredientAdded.amount'] += ingredientAdded.amount;
+      // this.shoppingListState['ingredientAdded.amount'] += ingredientAdded.amount;
     } else {
       this.ingredients.push(ingredientAdded);
       this.ingredientsChanged.next(this.ingredients.slice());
