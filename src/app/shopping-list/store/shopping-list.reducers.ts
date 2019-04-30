@@ -21,8 +21,21 @@ export function shoppingListReducer(
     case ShoppingListActions.ADD_INGREDIENTS:
       return {
         ...state,
+        ingredients: [...state.ingredients, ...action.payload]
+      };
+
+    case ShoppingListActions.UPDATE_INGREDIENT:
+      return {
+        ...state,
         ingredients: [...state.ingredients, action.payload]
       };
+
+    case ShoppingListActions.DELETE_INGREDIENT:
+      return {
+        ...state,
+        ingredients: [...state.ingredients, action.payload]
+      };
+
     default:
       return state;
   }

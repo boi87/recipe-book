@@ -1,12 +1,13 @@
 import { Ingredient } from '../shared/ingredient.model';
-
+import * as ShoppingListActions from './store/shopping-list.actions';
 import { Subject } from 'rxjs';
-import index from '@angular/cli/lib/cli';
-import { Input } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
+
+  private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>;
 
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 2),
@@ -22,6 +23,8 @@ export class ShoppingListService {
   }
 
   onIngredientAdded(ingredientAdded: Ingredient) {
+    // this.store.dispatch(new ShoppingListActions.AddIngredients());
+
     const check = this.ingredients.map(
       e => e.name.toLowerCase() === ingredientAdded.name.toLowerCase()
     );
