@@ -6,6 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
 import { Store } from '@ngrx/store';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
+import * as fromShoppingList from '../../shopping-list/store/shopping-list.reducers';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -15,14 +16,13 @@ import * as ShoppingListActions from '../../shopping-list/store/shopping-list.ac
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
   id: number;
-  ingredients: Ingredient[];
 
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private shoppingListService: ShoppingListService,
     private router: Router,
-    private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>
+    private store: Store<fromShoppingList.AppState>
   ) {}
 
   ngOnInit() {
