@@ -20,7 +20,6 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    // private shoppingListService: ShoppingListService,
     private router: Router,
     private store: Store<fromShoppingList.AppState>
   ) {}

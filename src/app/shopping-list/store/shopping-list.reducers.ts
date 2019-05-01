@@ -11,7 +11,6 @@ export interface State {
   editedIngredient: Ingredient;
   editedIngredientIndex: number;
 }
-// export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 
 const initialState: State = {
   ingredients: [new Ingredient('Apples', 2), new Ingredient('Oranges', 5)],
@@ -44,7 +43,6 @@ export function shoppingListReducer(
       };
 
     case ShoppingListActions.ADD_INGREDIENT:
-    case ShoppingListActions.UPDATE_INGREDIENT:
       return {
         ...state,
         ingredients: [...state.ingredients, action.payload].reduce(
@@ -62,9 +60,19 @@ export function shoppingListReducer(
           []
         )
       };
+    case ShoppingListActions.UPDATE_INGREDIENT:
+      const ingredient = state.ingredients[state.editedIngredientIndex];
+      const updatedIngredient = { ...ingredient, ...action.payload.ingredient };
+
+      const ingredients = [...state.ingredients];
+      ingredients[state.editedIngredientIndex] = updatedIngredient;
+      return {
+        ...state,
+        ingredients
+      };
     case ShoppingListActions.DELETE_INGREDIENT:
       const oldIngredients = [...state.ingredients];
-      oldIngredients.splice(action.payload, 1);
+      oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
         ...state,
         ingredients: oldIngredients
