@@ -3,7 +3,7 @@ import { Recipe } from '../recipes.model';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+
 import { Store } from '@ngrx/store';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 import * as fromShoppingList from '../../shopping-list/store/shopping-list.reducers';
@@ -20,7 +20,7 @@ export class RecipeDetailComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private shoppingListService: ShoppingListService,
+    // private shoppingListService: ShoppingListService,
     private router: Router,
     private store: Store<fromShoppingList.AppState>
   ) {}
