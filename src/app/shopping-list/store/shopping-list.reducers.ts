@@ -1,6 +1,7 @@
 import * as ShoppingListActions from './shopping-list.actions';
 
 import { Ingredient } from '../../shared/ingredient.model';
+import Swal from 'sweetalert2';
 
 export interface AppState {
   shoppingList: State;
@@ -62,6 +63,11 @@ export function shoppingListReducer(
       };
 
     case ShoppingListActions.UPDATE_INGREDIENT:
+      Swal.fire({
+        type: 'success',
+        text: 'Ingredient updated!',
+        title: 'Well done!'
+      });
       const ingredient = state.ingredients[state.editedIngredientIndex];
       const updatedIngredient = { ...ingredient, ...action.payload.ingredient };
 
@@ -75,6 +81,17 @@ export function shoppingListReducer(
       };
 
     case ShoppingListActions.DELETE_INGREDIENT:
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      Toast.fire({
+        type: 'warning',
+        title: 'Ingredient deleted'
+      });
       const oldIngredients = [...state.ingredients];
       oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
@@ -95,10 +112,9 @@ export function shoppingListReducer(
     case ShoppingListActions.STOP_EDIT:
       return {
         ...state,
-        editedIngredient = null,
+        editedIngredient: null,
         editedIngredientIndex: -1
       };
-
     default:
       return state;
   }

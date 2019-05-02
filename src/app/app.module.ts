@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -17,6 +18,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipeService } from './recipes/recipe.service';
 import { StoreModule } from '@ngrx/store';
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducers';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ shoppingList: shoppingListReducer })
+    SweetAlert2Module.forRoot(),
+    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
+    StoreRouterConnectingModule
   ],
   providers: [RecipeService],
   bootstrap: [AppComponent]
