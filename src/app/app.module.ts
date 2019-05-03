@@ -19,6 +19,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { StoreModule } from '@ngrx/store';
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducers';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { recipeReducer } from './recipes/store/recipe.reducers';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     StoreModule.forRoot({ shoppingList: shoppingListReducer }),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule,
+    StoreModule.forFeature('recipes', recipeReducer)
   ],
   providers: [RecipeService],
   bootstrap: [AppComponent]

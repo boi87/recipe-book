@@ -14,7 +14,7 @@ export class AppComponent {
   ngOnInit() {}
 
   onRecipesVisibilityFired(visible: boolean) {
-    console.log("recipes visibility in app,", visible);
+    console.log("recipeState visibility in app,", visible);
     this.recipesVisibility = visible;
   }
 

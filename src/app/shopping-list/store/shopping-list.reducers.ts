@@ -95,7 +95,7 @@ export function shoppingListReducer(
       const oldIngredients = [...state.ingredients];
       oldIngredients.splice(state.editedIngredientIndex, 1);
       return {
-        ...state,
+         ...state,
         ingredients: oldIngredients,
         editedIngredient: null,
         editedIngredientIndex: -1
