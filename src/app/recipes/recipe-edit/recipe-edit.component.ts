@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe.service';
+import * as RecipeActions from '../store/recipe.actions';
+import * as fromRecipe from '../store/recipe.reducers';
+import { Store } from '@ngrx/store';
 import { Recipe } from '../recipes.model';
-// import { Ingredient } from '../../shared/ingredient.model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -18,7 +21,8 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private store: Store<fromRecipe.FeatureState>
   ) {}
 
   ngOnInit() {
@@ -31,31 +35,28 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const newRecipe = new Recipe(
-      this.id,
-      this.recipeForm.value.name,
-      this.recipeForm.value.description,
-      this.recipeForm.value.imagepath,
-      this.recipeForm.value.shoppingListState
-    );
+    // const newRecipe = new Recipe(
+    //   this.id,
+    //   this.recipeForm.value.name,
+    //   this.recipeForm.value.description,
+    //   this.recipeForm.value.imagepath,
+    //   this.recipeForm.value.shoppingListState
+    // );
 
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, newRecipe);
+      this.store.dispatch(
+        new RecipeActions.UpdateRecipe({
+          index: this.id,
+          updatedRecipe: this.recipeForm.value
+        })
+      );
       this.onCancel();
     } else {
-      this.recipeService.addRecipe(newRecipe);
+      this.store.dispatch(new RecipeActions.AddRecipe(this.recipeForm.value));
+      // this.recipeService.addRecipe(this.recipeForm.value);
       this.onCancel();
     }
   }
-
-  // onSubmit() {
-  //   console.log(this.recipeForm);
-  //   if (this.editMode) {
-  //     this.recipeService.updateRecipe(this.id, this.recipeForm.value);
-  //   } else {
-  //     this.recipeService.addRecipe(this.recipeForm.value);
-  //   }
-  // }
 
   onAddIngredient() {
     (this.recipeForm.get('shoppingListState') as FormArray).push(
@@ -86,23 +87,29 @@ export class RecipeEditComponent implements OnInit {
     const recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
-      const recipe = this.recipeService.getRecipe(this.id);
-      recipeName = recipe.name;
-      recipeDescription = recipe.description;
-      recipeImagePath = recipe.imagePath;
-      if (recipe.ingredients) {
-        recipe.ingredients.map(ingr =>
-          recipeIngredients.push(
-            new FormGroup({
-              name: new FormControl(ingr.name, Validators.required),
-              amount: new FormControl(
-                ingr.amount,
-                Validators.pattern(/^[1-9]+[0-9]*$/)
+      // const recipe = this.recipeService.getRecipe(this.id);
+      this.store
+        .select('recipes')
+        .pipe(take(1))
+        .subscribe((recipeState: fromRecipe.State) => {
+          const recipe = recipeState.recipes[this.id];
+          recipeName = recipe.name;
+          recipeDescription = recipe.description;
+          recipeImagePath = recipe.imagePath;
+          if (recipe.ingredients) {
+            recipe.ingredients.map(ingr =>
+              recipeIngredients.push(
+                new FormGroup({
+                  name: new FormControl(ingr.name, Validators.required),
+                  amount: new FormControl(
+                    ingr.amount,
+                    Validators.pattern(/^[1-9]+[0-9]*$/)
+                  )
+                })
               )
-            })
-          )
-        );
-      }
+            );
+          }
+        });
     }
     this.recipeForm = new FormGroup({
       name: new FormControl(recipeName, Validators.required),
@@ -111,4 +118,8 @@ export class RecipeEditComponent implements OnInit {
       ingredients: recipeIngredients
     });
   }
+
+  // getControls() {
+  //   return (this.recipeForm.get('ingredients') as FormArray).controls;
+  // }
 }

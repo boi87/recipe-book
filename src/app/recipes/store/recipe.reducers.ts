@@ -1,8 +1,9 @@
 import { Recipe } from '../recipes.model';
 import { Ingredient } from '../../shared/ingredient.model';
 import * as RecipeActions from './recipe.actions';
+import * as fromApp from '../../store/app.reducers';
 
-export interface FeatureState {
+export interface FeatureState extends fromApp.AppState {
   recipes: State;
 }
 
@@ -41,30 +42,34 @@ export function recipeReducer(
       return { ...state, recipes: [...state.recipes, action.payload] };
 
     case RecipeActions.UPDATE_RECIPE:
-      // return {
-      //   ...state,
-      //   recipeState: {
-      //     ...state.recipeState,
-      //     ...(state.recipeState[action.payload.index] =
-      //       action.payload.updatedRecipe)
-      //   }
-      // };
-      // MAX SOLUTION
-      const recipe = state.recipes[action.payload.index];
-      const updatedRecipe = { ...recipe, ...action.payload.updatedRecipe };
-      const recipes = [...state.recipes];
-      recipes[action.payload.index] = updatedRecipe;
       return {
         ...state,
-        recipes: recipes
+        recipes: state.recipes.map((x, i) => {
+          if (action.payload.index === i) {
+            return {
+              ...x,
+              ...action.payload.updatedRecipe
+            };
+          }
+          return x;
+        })
       };
 
+      // MAX SOLUTION
+      // const recipe = state.recipes[action.payload.index];
+      // const updatedRecipe = { ...recipe, ...action.payload.updatedRecipe };
+      // const recipes = [...state.recipes];
+      // recipes[action.payload.index] = updatedRecipe;
+      // return {
+      //   ...state,
+      //   recipes
+      // };
+
     case RecipeActions.DELETE_RECIPE:
+      state.recipes.splice(action.payload, 1);
       return {
         ...state,
-        recipes: {
-          ...state.recipes.splice(action.payload, 1)
-        }
+        recipes: [...state.recipes]
       };
 
     default:
