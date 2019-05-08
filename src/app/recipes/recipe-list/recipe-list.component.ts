@@ -3,6 +3,7 @@ import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as fromRecipe from '../store/recipe.reducers';
+import * as RecipeActions from '../store/recipe.actions';
 
 import { Store } from '@ngrx/store';
 
@@ -23,6 +24,7 @@ export class RecipeListComponent implements OnInit {
 
   ngOnInit() {
     this.recipeState = this.store.select('recipes'); // 'recipeState' because it's the name we specified in the store module, in the forRoot
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
 
   onNewRecipe() {

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
@@ -20,6 +19,9 @@ import { StoreModule } from '@ngrx/store';
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducers';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { recipeReducer } from './recipes/store/recipe.reducers';
+import { RecipeEffects } from './recipes/store/recipe.effects';
+import { EffectsModule } from '@ngrx/effects';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,12 +40,15 @@ import { recipeReducer } from './recipes/store/recipe.reducers';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     StoreModule.forRoot({ shoppingList: shoppingListReducer }),
     StoreRouterConnectingModule,
-    StoreModule.forFeature('recipes', recipeReducer)
+    StoreModule.forFeature('recipes', recipeReducer),
+    EffectsModule.forFeature([RecipeEffects]),
+    EffectsModule.forRoot([])
   ],
   providers: [RecipeService],
   bootstrap: [AppComponent]

@@ -8,11 +8,10 @@
       <ul class="nav navbar-nav">
         <li>
           <a
-            [ngStyle]="{display: recipesVisibility ? 'block' : 'none'}"
+            [ngStyle]="{ display: recipesVisibility ? 'block' : 'none' }"
             routerLinkActive="active"
             [routerLink]="['/recipeState']"
-            (click)="toggleRecipesVisibility()"
-          >Recipes
+            >Recipes
           </a>
         </li>
         <li>
@@ -22,15 +21,14 @@
             }"
             routerLinkActive="active"
             [routerLink]="['/shopping-list']"
-            (click)="toggleShoppingListVisibility()"
-          >Shopping List
+            >Shopping List
           </a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
           <a style="cursor: pointer" class="dropdown toggle" role="button"
-          >Manage
+            >Manage
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">

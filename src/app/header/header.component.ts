@@ -1,4 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as RecipeActions from '../recipes/store/recipe.actions';
+import * as fromApp from '../shopping-list/store/shopping-list.reducers';
+
 // import { EventEmitter } from "events";
 
 @Component({
@@ -9,23 +13,15 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent implements OnInit {
   recipesVisibility = new EventEmitter<boolean>();
   shoppingListVisibility = new EventEmitter<boolean>();
-  recipesVisible = false;
-  shoppingListVisible = false;
-  constructor() {}
+
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {}
 
-  toggleRecipesVisibility() {
-    this.recipesVisible = !this.recipesVisible;
-    this.shoppingListVisible = false;
-    // this.ShoppingListVisibilityFired.emit(this.shoppingListVisible);
-    // this.recipesVisibilityFired.emit(this.recipesVisible);
+  onFetchData() {
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
-
-  toggleShoppingListVisibility() {
-    this.shoppingListVisible = !this.shoppingListVisible;
-    this.recipesVisible = false;
-    // this.recipesVisibilityFired.emit(this.recipesVisible);
-    // this.ShoppingListVisibilityFired.emit(this.shoppingListVisible);
+  onSaveData() {
+    this.store.dispatch(new RecipeActions.StoreRecipes());
   }
 }
