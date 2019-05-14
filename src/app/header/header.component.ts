@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as RecipeActions from '../recipes/store/recipe.actions';
 import * as fromApp from '../shopping-list/store/shopping-list.reducers';
@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   onFetchData() {
     this.store.dispatch(new RecipeActions.FetchRecipes());
   }
+
   onSaveData() {
     this.store.dispatch(new RecipeActions.StoreRecipes());
   }

@@ -16,7 +16,7 @@ const initialState: State = {
     // new Recipe(
     //   1,
     //   'Wine',
-    //   'Red, full bodied.',
+    // 'Red, full bodied.',
     //   'https://s.tannico.it/media/catalog/product/cache/2/thumbnail/0dc2d03fe217f8c83829496872af24a0/8/0/8055681240063_01.jpg',
     //   [new Ingredient('Red Grapes', 100), new Ingredient('Sulphites', 20)]
     // ),

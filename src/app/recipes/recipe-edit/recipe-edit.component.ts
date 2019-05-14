@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RecipeService } from '../recipe.service';
 import * as RecipeActions from '../store/recipe.actions';
 import * as fromRecipe from '../store/recipe.reducers';
 import { Store } from '@ngrx/store';
-import { Recipe } from '../recipes.model';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -20,7 +18,6 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService,
     private router: Router,
     private store: Store<fromRecipe.FeatureState>
   ) {}
@@ -35,14 +32,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // const newRecipe = new Recipe(
-    //   this.id,
-    //   this.recipeForm.value.name,
-    //   this.recipeForm.value.description,
-    //   this.recipeForm.value.imagepath,
-    //   this.recipeForm.value.shoppingListState
-    // );
-
     if (this.editMode) {
       this.store.dispatch(
         new RecipeActions.UpdateRecipe({
@@ -53,13 +42,15 @@ export class RecipeEditComponent implements OnInit {
       this.onCancel();
     } else {
       this.store.dispatch(new RecipeActions.AddRecipe(this.recipeForm.value));
-      // this.recipeService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(new RecipeActions.StoreRecipes());
       this.onCancel();
     }
   }
 
   onAddIngredient() {
-    (this.recipeForm.get('shoppingListState') as FormArray).push(
+    // this.store.dispatch(new RecipeActions.UpdateRecipe({index: this.id, updatedRecipe: this.recipeForm.value}));
+
+    (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
         name: new FormControl(null, Validators.required),
         amount: new FormControl(null, [
@@ -77,7 +68,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onDeleteIngredient(index: number) {
-    (this.recipeForm.get('shoppingListState') as FormArray).removeAt(index);
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   private initForm() {
@@ -87,7 +78,6 @@ export class RecipeEditComponent implements OnInit {
     const recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
-      // const recipe = this.recipeService.getRecipe(this.id);
       this.store
         .select('recipes')
         .pipe(take(1))
@@ -118,8 +108,4 @@ export class RecipeEditComponent implements OnInit {
       ingredients: recipeIngredients
     });
   }
-
-  // getControls() {
-  //   return (this.recipeForm.get('ingredients') as FormArray).controls;
-  // }
 }

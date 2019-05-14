@@ -31,8 +31,7 @@ export function shoppingListReducer(
         ingredients: [...state.ingredients, ...action.payload].reduce(
           (arr, ing) => {
             const index = arr.findIndex(
-              x => x.name.trim().toLowerCase() ===
-                ing.name.trim().toLowerCase()
+              x => x.name.trim().toLowerCase() === ing.name.trim().toLowerCase()
             );
             if (index !== -1) {
               arr[index].amount += ing.amount;
