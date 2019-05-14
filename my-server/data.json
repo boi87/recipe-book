@@ -1,0 +1,37 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Wine",
+      "description": "Red, full bodied.",
+      "imagePath": "https://s.tannico.it/media/catalog/product/cache/2/thumbnail/0dc2d03fe217f8c83829496872af24a0/8/0/8055681240063_01.jpg",
+      "ingredients": [
+        {
+          "name": "Red Grapes",
+          "amount": 100
+        },
+        {
+          "name": "Sulphites",
+          "amount": 20
+        }
+      ],
+      "imagepath": "https://s.tannico.it/media/catalog/product/cache/2/thumbnail/0dc2d03fe217f8c83829496872af24a0/8/0/8055681240063_01.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Wine",
+      "description": "White, crisp and refreshing",
+      "imagePath": "https://s.tannico.it/media/catalog/product/cache/43/thumbnail/0dc2d03fe217f8c83829496872af24a0/b/i/bia_3.jpg",
+      "ingredients": [
+        {
+          "name": "White Grapes",
+          "amount": 100
+        },
+        {
+          "name": "Sulphites",
+          "amount": 1
+        }
+      ]
+    }
+  ]
+}
